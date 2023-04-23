@@ -13,15 +13,16 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/fichier')]
 class FichierController extends AbstractController
 {
-    #[Route('/', name: 'app_fichier_index', methods: ['GET'])]
+    #[Route('', name: 'app_fichier_index', methods: ['GET'])]
     public function index(FichierRepository $fichierRepository): Response
     {
+//        dd($fichierRepository->findAll());
         return $this->render('fichier/index.html.twig', [
             'fichiers' => $fichierRepository->findAll(),
         ]);
     }
 
-    #[Route('/new', name: 'app_fichier_new', methods: ['GET', 'POST'])]
+    #[Route('/admin/nouveau_fichier', name: 'app_fichier_new', methods: ['GET', 'POST'])]
     public function new(Request $request, FichierRepository $fichierRepository): Response
     {
         $fichier = new Fichier();

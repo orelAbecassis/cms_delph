@@ -17,8 +17,8 @@ class Fichier
     #[ORM\Column(length: 255)]
     private ?string $nom_fichier = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $date_fichier = null;
+//    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+//    private ?\DateTimeInterface $date_fichier = null;
 
     public function getId(): ?int
     {
@@ -37,15 +37,15 @@ class Fichier
         return $this;
     }
 
-    public function getDateFichier(): ?\DateTimeInterface
-    {
-        return $this->date_fichier;
-    }
+//    public function getDateFichier(): ?\DateTimeInterface
+//    {
+//        return $this->date_fichier;
+//    }
 
-    public function setDateFichier(\DateTimeInterface $date_fichier): self
-    {
-        $this->date_fichier = $date_fichier;
-
-        return $this;
-    }
+//    public function setDateFichier(\DateTimeInterface $date_fichier): self
+//    {
+//        $this->date_fichier = $date_fichier;
+//
+//        return $this;
+//    }
 }

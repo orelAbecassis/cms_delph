@@ -13,7 +13,7 @@ class FichierType extends AbstractType
     {
         $builder
             ->add('nom_fichier')
-            ->add('date_fichier')
+//            ->add('date_fichier')
         ;
     }
 

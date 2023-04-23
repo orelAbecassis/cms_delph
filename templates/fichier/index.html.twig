@@ -19,7 +19,7 @@
             <tr>
                 <td>{{ fichier.id }}</td>
                 <td>{{ fichier.nomFichier }}</td>
-                <td>{{ fichier.dateFichier ? fichier.dateFichier|date('Y-m-d H:i:s') : '' }}</td>
+{#                <td>{{ fichier.dateFichier ? fichier.dateFichier|date('Y-m-d H:i:s') : '' }}</td>#}
                 <td>
                     <a href="{{ path('app_fichier_show', {'id': fichier.id}) }}">show</a>
                     <a href="{{ path('app_fichier_edit', {'id': fichier.id}) }}">edit</a>
