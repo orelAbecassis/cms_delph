@@ -3,17 +3,53 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
 
+
+
+    <h1>Inscription</h1>
+    <br>
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
 
-    {{form_row(registrationForm.roles,{'attr': {'class': 'form-control mt-2'}}) }}
-    {{ form_row(registrationForm.agreeTerms) }}
+    <div class="p-5 content-form" style="width: 800px; background-color: whitesmoke; text-align: center; position: relative; left: 20%">
 
-    <button type="submit" class="btn">Register</button>
+        <div>
+
+
+            <div class="form-group mb-4">
+                {{ form_label(registrationForm.email, 'Mail', {'label_attr': {'class': 'text-right'}}) }}
+                {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control mt-2'} }) }}
+            </div>
+
+
+
+            <div class="form-group mb-4">
+
+                {{ form_label(registrationForm.plainPassword, 'Mot de Passe', {'label_attr': {'class': 'text-right'}}) }}
+                {{ form_widget(registrationForm.plainPassword,{'attr': {'class': 'form-control mt-2'} }) }}
+
+            </div>
+
+            <div class="form-group mb-4">
+                {{ form_label(registrationForm.roles, 'Choisir un rôle', {'label_attr': {'class': 'text-right'}}) }}
+                {{ form_row(registrationForm.roles) }}
+
+
+            </div>
+            {{ form_row(registrationForm.agreeTerms) }}
+
+        </div>
+        <br>
+        <button type="submit" class="btn btn-dark">Enregitrer</button>
+    </div>
+    <br><br>
+
     {{ form_end(registrationForm) }}
+
+
+
+
+
 {% endblock %}
+
+
+

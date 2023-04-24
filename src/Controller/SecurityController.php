@@ -15,19 +15,20 @@ class SecurityController extends AbstractController
     {
         $role_user = $user->getRoles();
 
+
         if ($role_user[0] === "ROLE_ADMIN")
         {
-            return $this->redirectToRoute('app_home_admin');
+            return $this->redirectToRoute('app_info_client_new');
 
         }
-        elseif($role_user[0] === "ROLE_USER")
+        elseif($role_user[0] === "ROLE_CLIENT")
         {
-            return $this->redirectToRoute('app_home_comptable');
+            return $this->redirectToRoute('app_info_client_show');
 
         }
         else
         {
-            return $this->redirectToRoute('app_home_client');
+            return $this->redirectToRoute('app_info_client_index');
         }
     }
 
