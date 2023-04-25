@@ -23,7 +23,7 @@ class SecurityController extends AbstractController
         }
         elseif($role_user[0] === "ROLE_CLIENT")
         {
-            return $this->redirectToRoute('app_info_client_show');
+            return $this->redirectToRoute('app_fichier_index');
 
         }
         else
