@@ -43,7 +43,7 @@
                             {#                        <li><a class="dropdown-item" href="#">Something else here</a></li>#}
                         </ul>
                     </li>
-                    <li><a class="nav-link" style="color: #FFFFFF" href="{{ path('app_info_client_show') }}">Mon espace</a></li>
+{#                    <li><a class="nav-link" style="color: #FFFFFF" href="{{ path('app_info_client_show') }}">Mon espace</a></li>#}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" style="color: #FFFFFF"  role="button" data-bs-toggle="dropdown" aria-expanded="false" href="{{ path('app_fichier_index') }}">
                             Fichiers
@@ -94,8 +94,8 @@
         </div>
     </div>
     {% if is_granted('ROLE_ADMIN') or (is_granted('ROLE_COMPTABLE'))%}
-    <form class="d-flex"  name="fichier" method="get" action="/fichier">
-        <input class="form-control me-sm-3" type="text" name="fichier" placeholder="Ajouter Fichier">
+    <form class="d-flex"  name="test" method="post" action="/fichier/demande">
+        <input class="form-control me-sm-3" type="text" name="test[jcp]" placeholder="Ajouter Fichier">
         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Ajouter</button>
     </form>
     {% endif %}

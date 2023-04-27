@@ -35,8 +35,7 @@ class FichierController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $fichierRepository->save($fichier, true);
 
-            return $this->redirectToRoute('app_fichier_index', [], Response::HTTP_SEE_OTHER);
-        }
+            return $this->redirectToRoute('app_fichier_index', [], Response::HTTP_SEE_OTHER);        }
 
         return $this->renderForm('fichier/new.html.twig', [
             'fichier' => $fichier,
