@@ -62,7 +62,7 @@
                             Clients
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ path('app_info_client_index') }}">Mes Clients</a></li>
+                            <li><a class="dropdown-item" href="{{ path('mesColab') }}">Mes Clients</a></li>
                             <li><a class="dropdown-item" href="{{ path('app_info_client_new') }}">Ajouter Les Clients</a></li>
                             <li><a class="dropdown-item" href="{{ path('app_info_client_index') }}">Tout les Clients</a></li>
                         </ul>
@@ -93,11 +93,13 @@
             </ul>
         </div>
     </div>
-    {% if is_granted('ROLE_ADMIN') or (is_granted('ROLE_COMPTABLE'))%}
-    <form class="d-flex"  name="test" method="post" action="/fichier/demande">
-        <input class="form-control me-sm-3" type="text" name="test[jcp]" placeholder="Ajouter Fichier">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Ajouter</button>
-    </form>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <form class="d-flex"  name="test" method="get" action="/fichier/demande">
+            <input class="form-control me-sm-2" type="text" name="test[jcp]" placeholder="Ajouter Nom Fichier">
+            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Ajouter</button>
+        </form>
+        </form>
     {% endif %}
 </nav>
 

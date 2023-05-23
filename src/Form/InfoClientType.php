@@ -2,7 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\Categories;
 use App\Entity\InfoClient;
+use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,7 +25,9 @@ class InfoClientType extends AbstractType
             ->add('cp')
             ->add('ville')
             ->add('siret')
-            ->add('id_user')
+            ->add('id_user', EntityType::class, [
+                'class' => User::class,
+            ])
         ;
     }
 

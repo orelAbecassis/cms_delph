@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Repository;
-
+use App\Entity\InfoClient;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -54,6 +54,41 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $user->setPassword($newHashedPassword);
 
         $this->save($user, true);
+    }
+
+
+
+
+    public function getUnUser(int $id_user)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $user = $entityManager->getRepository(InfoClient::class)->find($id_user);
+
+        if (!$user)
+        {
+            throw $this->createNotFoundException('Le User n\' existe pas');
+
+        }
+        $users = $user->getInfoClients();
+
+        foreach ($users as $utilisateur)
+            {
+                $clientData[] = [
+                    'id' =>$utilisateur->getId(),
+                    'nom'=>$utilisateur->getNom(),
+                    'prenom'=>$utilisateur->getPrenom(),
+                    'mail_pro'=>$utilisateur->getMailPro(),
+                    'nom_societe'=>$utilisateur->getNomSociete(),
+                    'adresse'=>$utilisateur->getAdresse(),
+                    'num_pro'=>$utilisateur->getNumPro(),
+                    'num'=>$utilisateur->getNum(),
+                    'cp'=>$utilisateur->getCp(),
+                    'ville'=>$utilisateur->getVille(),
+                    'siret'=>$utilisateur->getSiret()
+                ];
+            }
+        return $clientData;
     }
 
 //    /**

@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\InfoClient;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Entity;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -38,6 +40,8 @@ class InfoClientRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+
 
 //    /**
 //     * @return InfoClient[] Returns an array of InfoClient objects

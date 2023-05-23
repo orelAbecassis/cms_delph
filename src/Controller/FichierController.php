@@ -24,7 +24,7 @@ class FichierController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/nouveau_fichier', name: 'app_fichier_new', methods: ['GET', 'POST'])]
+    #[Route('/admin/nouveau_fichier', name: 'app_fichier_new', methods: ['GET'])]
     public function new(Request $request, FichierRepository $fichierRepository): Response
     {
         $user = $this->getUser();
@@ -35,7 +35,8 @@ class FichierController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $fichierRepository->save($fichier, true);
 
-            return $this->redirectToRoute('app_fichier_index', [], Response::HTTP_SEE_OTHER);        }
+            return $this->redirectToRoute('app_fichier_index', [], Response::HTTP_SEE_OTHER);
+        }
 
         return $this->renderForm('fichier/new.html.twig', [
             'fichier' => $fichier,

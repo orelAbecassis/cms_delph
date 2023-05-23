@@ -8,11 +8,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class FichierDemandeController extends AbstractController
 {
-    #[Route('/fichier/demande', name: 'app_fichier_demande')]
+    #[Route('/fichierDemande', name: 'app_fichier_demande')]
     public function index(): Response
     {
+        $user = $this->getUser();
         return $this->render('fichier_demande/index.html.twig', [
             'controller_name' => 'FichierDemandeController',
+            'user'=>$user->getUserIdentifier()
         ]);
     }
 }

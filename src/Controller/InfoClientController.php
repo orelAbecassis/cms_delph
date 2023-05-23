@@ -2,14 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\FichierDemande;
 use App\Entity\User;
 use App\Entity\InfoClient;
 use App\Form\InfoClientType;
 use App\Repository\InfoClientRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\DocBlock\Serializer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route('/info/client')]
 class InfoClientController extends AbstractController
@@ -47,12 +51,14 @@ class InfoClientController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_info_client_show', methods: ['GET'])]
-    public function show(InfoClient $infoClient): Response
+    public function show( $id): Response
     {
-        $user = $this->getUser();
+//        $clientData = $this->getUser($id_user);
+        $user = $this->getUser($id);
         return $this->render('info_client/show.html.twig', [
-            'info_client' => $infoClient,
-            'user'=>$user->getUserIdentifier()
+//            'clientData' => $clientData,
+            'user'=>$user->getUserIdentifier(),
+
         ]);
     }
 
@@ -85,5 +91,21 @@ class InfoClientController extends AbstractController
         }
 
         return $this->redirectToRoute('app_info_client_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+    #[Route('/mesColab', name:'mesColab', methods:['GET'])]
+    public function index1(InfoClientRepository $infoClientRepository, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+        $count = $entityManager->getRepository(FichierDemande::class)->count_fichier();
+        $clients = $entityManager->getRepository(InfoClient::class)->findBy([
+            'id_user' =>$user,
+        ]);
+        return $this->render('info_client/index.html.twig', [
+            'info_clients' => $infoClientRepository->find($clients),
+            'user'=>$user->getUserIdentifier(),
+            'count'=>$infoClientRepository->count($count)
+        ]);
     }
 }

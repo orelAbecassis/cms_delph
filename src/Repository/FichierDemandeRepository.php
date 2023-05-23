@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\FichierDemande;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -37,6 +38,18 @@ class FichierDemandeRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+    public function count_fichier(EntityManagerInterface $em)
+    {
+
+        $sql = 'SELECT COUNT(nom_fichier) AS count FROM fichier_demande';
+        $stmt = $em->getConnection()->prepare($sql);
+        $result = $stmt->executeQuery()->fetchAllAssociative();
+
+        return $result;
+
+
+
     }
 
 //    /**
