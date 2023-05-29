@@ -50,19 +50,22 @@ class InfoClientController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_info_client_show', methods: ['GET'])]
-    public function show( $id): Response
+    #[Route('/show/{id}', name: 'app_info_client_show', methods: ['GET'])]
+    public function show(InfoClientRepository $infoClient, $id): Response
     {
-//        $clientData = $this->getUser($id_user);
+//        $clientData = $this->getUser($id);
+//        dd($clientData);
+        $client = $infoClient->find($id);
+//        dd($client);
         $user = $this->getUser($id);
         return $this->render('info_client/show.html.twig', [
-//            'clientData' => $clientData,
+            'info_client' => $client,
             'user'=>$user->getUserIdentifier(),
 
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_info_client_edit', methods: ['GET', 'POST'])]
+    #[Route('/edit/{id}', name: 'app_info_client_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, InfoClient $infoClient, InfoClientRepository $infoClientRepository): Response
     {
         $user = $this->getUser();
@@ -82,7 +85,7 @@ class InfoClientController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_info_client_delete', methods: ['POST'])]
+    #[Route('/delete/{id}', name: 'app_info_client_delete', methods: ['POST'])]
     public function delete(Request $request, InfoClient $infoClient, InfoClientRepository $infoClientRepository): Response
     {
 
@@ -97,15 +100,20 @@ class InfoClientController extends AbstractController
     #[Route('/mesColab', name:'mesColab', methods:['GET'])]
     public function index1(InfoClientRepository $infoClientRepository, EntityManagerInterface $entityManager): Response
     {
+
         $user = $this->getUser();
-        $count = $entityManager->getRepository(FichierDemande::class)->count_fichier();
+//        $count = $entityManager->getRepository(FichierDemande::class)->count_fichier($entityManager);
+//        dd($count);
         $clients = $entityManager->getRepository(InfoClient::class)->findBy([
             'id_user' =>$user,
         ]);
+//        dd($clients);
         return $this->render('info_client/index.html.twig', [
-            'info_clients' => $infoClientRepository->find($clients),
+            'info_clients' => $clients,
             'user'=>$user->getUserIdentifier(),
-            'count'=>$infoClientRepository->count($count)
+//            'count'=>$infoClientRepository->count($count)
         ]);
+
     }
+
 }

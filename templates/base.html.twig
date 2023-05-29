@@ -77,7 +77,7 @@
                         Utilisateurs
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ path('app_user_new') }}">Ajouter user</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_register') }}">Ajouter user</a></li>
                         <li><a class="dropdown-item" href="{{ path('app_user_index') }}">Tout les Utilisateurs</a></li>
                     </ul>
                 </li>
@@ -95,8 +95,8 @@
     </div>
 
     {% if is_granted('ROLE_ADMIN') %}
-        <form class="d-flex"  name="test" method="get" action="/fichier/demande">
-            <input class="form-control me-sm-2" type="text" name="test[jcp]" placeholder="Ajouter Nom Fichier">
+        <form class="d-flex"  name="fichier[nom_fichier]" method="get" action="/fichier/admin/add">
+            <input class="form-control me-sm-2" type="text" name="test" placeholder="Ajouter Nom Fichier">
             <button class="btn btn-secondary my-2 my-sm-0" type="submit">Ajouter</button>
         </form>
         </form>

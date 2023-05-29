@@ -39,18 +39,14 @@ class FichierDemandeRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-    public function count_fichier(EntityManagerInterface $em)
-    {
-
-        $sql = 'SELECT COUNT(nom_fichier) AS count FROM fichier_demande';
-        $stmt = $em->getConnection()->prepare($sql);
-        $result = $stmt->executeQuery()->fetchAllAssociative();
-
-        return $result;
-
-
-
-    }
+//    public function insert(EntityManagerInterface $em,$d)
+//    {
+//
+//        $sql = 'insert into fichier values ($d) ';
+//        $stmt = $em->getConnection()->prepare($sql);
+//        $resul = $stmt->executeQuery()->fetchAllAssociative();
+//        return $resul;
+//    }
 
 //    /**
 //     * @return FichierDemande[] Returns an array of FichierDemande objects

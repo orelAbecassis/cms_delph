@@ -15,10 +15,10 @@
                 <th>Nom_fichier</th>
                 <td>{{ fichier.nomFichier }}</td>
             </tr>
-            <tr>
-                <th>Date_fichier</th>
-                <td>{{ fichier.dateFichier ? fichier.dateFichier|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
+{#            <tr>#}
+{#                <th>Date_fichier</th>#}
+{#                <td>{{ fichier.dateFichier ? fichier.dateFichier|date('Y-m-d H:i:s') : '' }}</td>#}
+{#            </tr>#}
         </tbody>
     </table>
 
@@ -26,5 +26,5 @@
 
     <a href="{{ path('app_fichier_edit', {'id': fichier.id}) }}">edit</a>
 
-    {{ include('fichier/_delete_form.html.twig') }}
+
 {% endblock %}

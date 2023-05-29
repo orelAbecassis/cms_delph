@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Fichier;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -37,6 +38,26 @@ class FichierRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+    // fonction qui met denregistrer le nom d'un fichier appele dans le controller fichier
+    public function insert2(EntityManagerInterface $em,$d)
+    {
+        $sql = "INSERT INTO `fichier`(`nom_fichier`) VALUES ('$d')";
+
+        $stmt = $em->getConnection()->prepare($sql);
+        $resul = $stmt->executeQuery()->fetchAllAssociative();
+
+        return $resul;
+    }
+
+
+    public function deleteFile(EntityManagerInterface $em, $fichier)
+    {
+        $sql = "DELETE FROM `fichier` WHERE nom_fichier = '".$fichier."'";
+
+        $stmt = $em->getConnection()->prepare($sql);
+        $resul = $stmt->executeQuery()->fetchAllAssociative();
+        return $resul;
     }
 
 //    /**
