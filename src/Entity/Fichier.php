@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\FichierRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -16,6 +18,14 @@ class Fichier
 
     #[ORM\Column(length: 255)]
     private ?string $nom_fichier = null;
+
+    #[ORM\OneToMany(mappedBy: 'id_fichier', targetEntity: FichierDemande::class)]
+    private Collection $fichierDemandes;
+
+    public function __construct()
+    {
+        $this->fichierDemandes = new ArrayCollection();
+    }
 
 //    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
 //    private ?\DateTimeInterface $date_fichier = null;
@@ -48,4 +58,34 @@ class Fichier
 //
 //        return $this;
 //    }
+
+/**
+ * @return Collection<int, FichierDemande>
+ */
+public function getFichierDemandes(): Collection
+{
+    return $this->fichierDemandes;
+}
+
+public function addFichierDemande(FichierDemande $fichierDemande): self
+{
+    if (!$this->fichierDemandes->contains($fichierDemande)) {
+        $this->fichierDemandes->add($fichierDemande);
+        $fichierDemande->setIdFichier($this);
+    }
+
+    return $this;
+}
+
+public function removeFichierDemande(FichierDemande $fichierDemande): self
+{
+    if ($this->fichierDemandes->removeElement($fichierDemande)) {
+        // set the owning side to null (unless already changed)
+        if ($fichierDemande->getIdFichier() === $this) {
+            $fichierDemande->setIdFichier(null);
+        }
+    }
+
+    return $this;
+}
 }
