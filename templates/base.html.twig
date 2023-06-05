@@ -33,16 +33,7 @@
                 </li>
                 {% endif %}
                 {% if app.user %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" style="color: #FFFFFF" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="{{ path('app_fichier_index') }}">
-                            Chat
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ path('app_register') }}">Nouveau Message</a></li>
-                            <li><a class="dropdown-item" href="{{ path('app_user_index') }}">Tout les Messages</a></li>
-                            {#                        <li><a class="dropdown-item" href="#">Something else here</a></li>#}
-                        </ul>
-                    </li>
+
 {#                    <li><a class="nav-link" style="color: #FFFFFF" href="{{ path('app_info_client_show') }}">Mon espace</a></li>#}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" style="color: #FFFFFF"  role="button" data-bs-toggle="dropdown" aria-expanded="false" href="{{ path('app_fichier_index') }}">

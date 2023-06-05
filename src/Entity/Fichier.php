@@ -88,4 +88,9 @@ public function removeFichierDemande(FichierDemande $fichierDemande): self
 
     return $this;
 }
+
+    public function __toString(): string
+    {
+        return $this->getNomFichier() ?? '';
+    }
 }

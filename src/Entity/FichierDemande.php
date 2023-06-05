@@ -63,7 +63,9 @@ class FichierDemande
         return $this;
     }
 
-    public function __toString() {
-        return $this->getNomFichier();
-    }
+    public function __toString(): string
+    {
+        return $this->getNomFichier() ?? '';
+        }
+
 }

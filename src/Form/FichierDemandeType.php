@@ -2,10 +2,14 @@
 
 namespace App\Form;
 
+use App\Entity\Fichier;
 use App\Entity\FichierDemande;
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 
 class FichierDemandeType extends AbstractType
 {
@@ -13,8 +17,14 @@ class FichierDemandeType extends AbstractType
     {
         $builder
             ->add('nom_fichier')
-            ->add('id_user')
-            ->add('id_fichier')
+            ->add('id_user' , EntityType::class, [
+                'class' => User::class,
+            ])
+            ->add('id_fichier' , EntityType::class, [
+                'class' => Fichier::class,
+            ])
+
+
         ;
     }
 
