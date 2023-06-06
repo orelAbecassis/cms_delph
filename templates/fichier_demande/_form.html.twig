@@ -14,11 +14,8 @@
             <br><br>
             <div class="form-group">
                 {{ form_label(form.nom_fichier, 'Insérer un fichier', {'label_attr': {'class': 'text-right'}}) }}
-{#               {{ form_widget(form.nom_fichier, {'attr': {'name': 'nom_fichier', 'class': 'form-control mt-2', 'type': 'file'}}) }}#}
+                {{ form_row(form.nom_fichier, {'attr': {'class': 'form-control mt-2', 'type': 'type'}}) }}
 
-
-                <label for="exampleFormControlFile1">Veuillez ajouter le fichier</label>
-                <input type="file" class="form-control" name="nom_fichier" id="exampleFormControlFile1">
             </div>
 
             <button class="btn btn-dark" type="submit">{{ button_label|default('Enregistrer') }}</button>
