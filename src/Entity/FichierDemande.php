@@ -4,23 +4,30 @@ namespace App\Entity;
 
 use App\Repository\FichierDemandeRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: FichierDemandeRepository::class)]
+#[Vich\Uploadable]
 class FichierDemande
 {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(nullable: true)]
     private ?string $nom_fichier = null;
+
 
     #[ORM\ManyToOne(inversedBy: 'fichierDemandes')]
     private ?User $id_user = null;
 
     #[ORM\ManyToOne(inversedBy: 'fichierDemandes')]
     private ?Fichier $id_fichier = null;
+
+
 
     public function getId(): ?int
     {
@@ -29,14 +36,13 @@ class FichierDemande
 
     public function getNomFichier(): ?string
     {
-        return $this->nom_fichier;
+        return $this->nom_fichier ;
     }
 
-    public function setNomFichier(string $nom_fichier): self
-    {
-        $this->nom_fichier = $nom_fichier;
 
-        return $this;
+    public function setNomFichier(?string $nomFichier): void
+    {
+        $this->nom_fichier = $nomFichier;
     }
 
     public function getIdUser(): ?User

@@ -5,7 +5,6 @@ namespace App\Form;
 use App\Entity\Fichier;
 use App\Entity\FichierDemande;
 use App\Entity\User;
-use App\Entity\Author;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,9 +20,6 @@ class FichierDemandeType extends AbstractType
     {
         $builder
             ->add('nom_fichier', FileType::class, [
-                'label' => ' (Uniquement en PDF)',
-                'mapped' => false,
-                'required' => false,
                 'constraints' => [
                     new File([
                         'maxSize' => '1024k',

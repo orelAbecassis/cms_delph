@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use phpDocumentor\Reflection\DocBlock\Serializer;
+use Symfony\Component\HttpFoundation\File\File;
 
 #[Route('fichier_demande')]
 class FichierDemandeController extends AbstractController
@@ -37,6 +38,8 @@ class FichierDemandeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $uploadedFile = $form->get('nom_fichier')->getData();
+            $fichierDemande->setNomFichier(new File($uploadedFile));
             $fichierDemandeRepository->save($fichierDemande, true);
 
             return $this->redirectToRoute('app_fichier_demande_index', [], Response::HTTP_SEE_OTHER);
