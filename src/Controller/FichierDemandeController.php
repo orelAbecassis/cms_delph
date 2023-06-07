@@ -39,6 +39,9 @@ class FichierDemandeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $uploadedFile = $form->get('nom_fichier')->getData();
+            $destinationDirectory = $this->getParameter('kernel.project_dir') . '/public/fichier';
+            $newFilename = uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
+            $uploadedFile->move($destinationDirectory, $newFilename);
             $fichierDemande->setNomFichier(new File($uploadedFile));
             $fichierDemandeRepository->save($fichierDemande, true);
 
