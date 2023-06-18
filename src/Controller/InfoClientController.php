@@ -51,6 +51,10 @@ class InfoClientController extends AbstractController
         foreach ($utilisateurs as $utilisateur) {
             $listeNoms[$utilisateur->getId()] = $utilisateur->getNom();
         }
+        // dd($infoClient);
+        // dd($listeNoms);
+        // dd( $user->getUserIdentifier());
+        // dd($form);
 
         return $this->renderForm('info_client/new.html.twig', [
             'info_client' => $infoClient,

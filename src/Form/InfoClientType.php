@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Form;
-
+use App\Repository\UserRepository;
 use App\Entity\Categories;
 use App\Entity\InfoClient;
 use App\Entity\User;
@@ -27,6 +27,12 @@ class InfoClientType extends AbstractType
             ->add('siret')
             ->add('id_user', EntityType::class, [
                 'class' => User::class,
+                'query_builder' => function (UserRepository $userRepository) {
+                    return $userRepository->createQueryBuilder('a')
+                        ->andWhere('a.roles LIKE :role')
+                        ->setParameter('role', '%ROLE_COMPTABLE%')
+                        ->orderBy('a.email');
+                }
 
             ])
         ;

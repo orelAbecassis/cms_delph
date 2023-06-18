@@ -8,6 +8,8 @@ use App\Entity\FichierDemande;
 use App\Form\FichierDemandeType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\FichierDemandeRepository;
+use App\Repository\FichierRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,15 +24,27 @@ class FichierDemandeController extends AbstractController
     #[Route('/', name: 'app_fichier_demande_index', methods: ['GET'])]
     public function index(FichierDemandeRepository $fichierDemandeRepository): Response
     {
+   
+    
         $user = $this->getUser();
+        $test = $fichierDemandeRepository->findAll();
+
+        // dd($fichierDemandeRepository->findAll());
         return $this->render('fichier_demande/index.html.twig', [
-            'fichier_demandes' => $fichierDemandeRepository->findAll(),
+            'fichier_demandes' =>   $fichierDemandeRepository->createQueryBuilder('fd')
+            ->leftJoin('fd.id_user', 'u')
+            ->leftJoin('fd.id_fichier', 'f')
+            ->addSelect('u')
+            ->addSelect('f')
+            ->getQuery()
+            ->getResult(),
             'user'=>$user->getUserIdentifier()
         ]);
+
     }
 
     #[Route('/new', name: 'app_fichier_demande_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, FichierDemandeRepository $fichierDemandeRepository): Response
+    public function new(EntityManagerInterface $entityManager ,Request $request, UserRepository $userrepo, FichierRepository $fichierrepo, FichierDemandeRepository $fichierDemandeRepository): Response
     {
         $user = $this->getUser();
         $fichierDemande = new FichierDemande();
@@ -39,11 +53,29 @@ class FichierDemandeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $uploadedFile = $form->get('nom_fichier')->getData();
+              // Il s'agit de l'id du comptable 
+            $idUser = $form->get('id_user')->getData()->getId();
+            $idUser = $userrepo->find($idUser);
+           
+            // dd($idUser);
+               //Il s'agit de l'id du fichier demander pour tout les clients
+            $idNomFichier= $form->get('id_fichier')->getData()->getId();
+            $idNomFichier = $fichierrepo->find($idNomFichier);
+
+            $nomOriginal = $form->get('nom_fichier')->getData()->getClientOriginalName();
             $destinationDirectory = $this->getParameter('kernel.project_dir') . '/public/fichier';
-            $newFilename = uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
+            // dd($destinationDirectory);
+            $newFilename = $nomOriginal;
+            // dd($newFilename);
             $uploadedFile->move($destinationDirectory, $newFilename);
-            $fichierDemande->setNomFichier(new File($uploadedFile));
-            $fichierDemandeRepository->save($fichierDemande, true);
+            $fichierDemande->setNomFichier($destinationDirectory.$newFilename);
+            $fichierDemande->setIdUser($idUser);
+            $fichierDemande->setIdFichier($idNomFichier);
+            $entityManager->persist($fichierDemande);
+            $entityManager->flush();
+
+            // dd($fichierDemande);
+            // $fichierDemandeRepository->save($fichierDemande, true);
 
             return $this->redirectToRoute('app_fichier_demande_index', [], Response::HTTP_SEE_OTHER);
         }

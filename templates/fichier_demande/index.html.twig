@@ -16,10 +16,12 @@
         </thead>
         <tbody>
         {% for fichier_demande in fichier_demandes %}
+          {{ dump(fichier_demande) }}
             <tr>
                 <td>{{ fichier_demande.id }}</td>
-                <td>{{ fichier_demande.id_user }}</td>
-                <td>{{ fichier_demande.nomFichier }}</td>
+              
+                {# <td>{{ fichier_demande.id_user.email }}</td>
+                <td>{{ fichier_demande.id_fichier.nom_fichier }}</td> #}
                 <td>
                     <a href="{{ path('app_fichier_demande_show', {'id': fichier_demande.id}) }}">show</a>
                     <a href="{{ path('app_fichier_demande_edit', {'id': fichier_demande.id}) }}">edit</a>
