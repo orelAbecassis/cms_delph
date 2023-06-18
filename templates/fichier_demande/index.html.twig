@@ -9,6 +9,7 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Nom Client</th>
                 <th>Nom_fichier</th>
                 <th>actions</th>
             </tr>
@@ -17,6 +18,7 @@
         {% for fichier_demande in fichier_demandes %}
             <tr>
                 <td>{{ fichier_demande.id }}</td>
+                <td>{{ fichier_demande.id_user }}</td>
                 <td>{{ fichier_demande.nomFichier }}</td>
                 <td>
                     <a href="{{ path('app_fichier_demande_show', {'id': fichier_demande.id}) }}">show</a>

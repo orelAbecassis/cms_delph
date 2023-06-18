@@ -27,6 +27,7 @@ class InfoClientType extends AbstractType
             ->add('siret')
             ->add('id_user', EntityType::class, [
                 'class' => User::class,
+
             ])
         ;
     }

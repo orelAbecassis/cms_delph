@@ -6,7 +6,9 @@ use App\Entity\FichierDemande;
 use App\Entity\User;
 use App\Entity\InfoClient;
 use App\Form\InfoClientType;
+use App\Form\UserType;
 use App\Repository\InfoClientRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use phpDocumentor\Reflection\DocBlock\Serializer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,7 +32,7 @@ class InfoClientController extends AbstractController
     }
 
     #[Route('/new', name: 'app_info_client_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, InfoClientRepository $infoClientRepository): Response
+    public function new(Request $request, InfoClientRepository $infoClientRepository, UserRepository $userRepository): Response
     {
         $user = $this->getUser();
         $infoClient = new InfoClient();
@@ -43,12 +45,21 @@ class InfoClientController extends AbstractController
             return $this->redirectToRoute('app_info_client_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        $utilisateurs = $userRepository->findBy(['roles' => 'ROLE_ADMIN']);
+
+        $listeNoms = [];
+        foreach ($utilisateurs as $utilisateur) {
+            $listeNoms[$utilisateur->getId()] = $utilisateur->getNom();
+        }
+
         return $this->renderForm('info_client/new.html.twig', [
             'info_client' => $infoClient,
             'form' => $form,
-            'user'=>$user->getUserIdentifier()
+            'user' => $user->getUserIdentifier(),
+            'listeNoms' => $listeNoms,
         ]);
     }
+
 
     #[Route('/show/{id}', name: 'app_info_client_show', methods: ['GET'])]
     public function show(InfoClientRepository $infoClient, $id): Response
