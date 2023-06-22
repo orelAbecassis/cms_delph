@@ -88,15 +88,8 @@ class FichierDemandeController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_fichier_demande_show', methods: ['GET'])]
-    public function show(FichierDemande $fichierDemande): Response
-    {
-        $user = $this->getUser();
-        return $this->render('fichier_demande/show.html.twig', [
-            'fichier_demande' => $fichierDemande,
-            'user'=>$user->getUserIdentifier()
-        ]);
-    }
+
+
 
     #[Route('/{id}/edit', name: 'app_fichier_demande_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, FichierDemande $fichierDemande, FichierDemandeRepository $fichierDemandeRepository): Response
@@ -127,4 +120,23 @@ class FichierDemandeController extends AbstractController
 
         return $this->redirectToRoute('app_fichier_demande_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+    #[Route('/fichierpdf/{name}', name: 'app_view_pdf', methods: ['GET'])]
+    public function view_pdf($name)
+    {
+        $projectRoot = $this->getParameter('kernel.project_dir');
+        $filename = $name;
+
+        return $this->file($projectRoot.'/public/fichier/'.$filename, null, ResponseHeaderBag::DISPOSITION_INLINE);
+    }
+
+
+    #[Route('/{id}', name: 'app_fichier_demande_show', methods: ['GET'])]
+    public function show(FichierDemande $fichierDemande): Response
+    {
+        $pathToFile = 'fichierpdf/' . $fichierDemande->getNomFichier();
+        return $this->file($pathToFile);
+    }
+
 }

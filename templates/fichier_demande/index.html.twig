@@ -11,6 +11,7 @@
                 <th>Id</th>
                 <th>Nom Client</th>
                 <th>Nom_fichier</th>
+                <th>Voir pdf</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -20,12 +21,14 @@
             <tr>
                 <td>{{ fichier_demande.id }}</td>
               
-                {# <td>{{ fichier_demande.id_user.email }}</td>
-                <td>{{ fichier_demande.id_fichier.nom_fichier }}</td> #}
+                { <td>{{ fichier_demande.idUser.email }}</td>
+
+                <td>{{ fichier_demande.idFichier.nomFichier }}</td> }
                 <td>
-                    <a href="{{ path('app_fichier_demande_show', {'id': fichier_demande.id}) }}">show</a>
-                    <a href="{{ path('app_fichier_demande_edit', {'id': fichier_demande.id}) }}">edit</a>
+                    <a href="{{ path('app_view_pdf', {'name': fichier_demande.id}) }}" target="_blank">Cliquez ici</a>
+
                 </td>
+                <td> <a href="{{ path('app_fichier_demande_show', {'id': fichier_demande.id}) }}">show</a></td>
             </tr>
         {% else %}
             <tr>
