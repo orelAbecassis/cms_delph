@@ -12,23 +12,20 @@
                 <th>Nom Client</th>
                 <th>Nom_fichier</th>
                 <th>Voir pdf</th>
-                <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for fichier_demande in fichier_demandes %}
-          {{ dump(fichier_demande) }}
             <tr>
                 <td>{{ fichier_demande.id }}</td>
               
-                { <td>{{ fichier_demande.idUser.email }}</td>
+                 <td>{{ fichier_demande.idUser.email }}</td>
 
-                <td>{{ fichier_demande.idFichier.nomFichier }}</td> }
+                <td>{{ fichier_demande.idFichier.nomFichier }}</td>
                 <td>
-                    <a href="{{ path('app_view_pdf', {'name': fichier_demande.id}) }}" target="_blank">Cliquez ici</a>
+                    <a href="{{ path('app_view_pdf', {'name': fichier_demande.getNomFichier()}) }}" target="_blank">Cliquez ici</a>
 
                 </td>
-                <td> <a href="{{ path('app_fichier_demande_show', {'id': fichier_demande.id}) }}">show</a></td>
             </tr>
         {% else %}
             <tr>

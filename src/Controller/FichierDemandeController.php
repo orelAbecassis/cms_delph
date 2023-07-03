@@ -13,6 +13,7 @@ use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use phpDocumentor\Reflection\DocBlock\Serializer;
@@ -63,19 +64,21 @@ class FichierDemandeController extends AbstractController
             $idNomFichier = $fichierrepo->find($idNomFichier);
 
             $nomOriginal = $form->get('nom_fichier')->getData()->getClientOriginalName();
-            $destinationDirectory = $this->getParameter('kernel.project_dir') . '/public/fichier';
-            // dd($destinationDirectory);
+//            $destinationDirectory = $this->getParameter('kernel.project_dir') . 'fichier';
+            $destinationDirectory = 'D:/XAMPP/htdocs/WEB/DELPH/cms_delph/public/'.'fichier';
+//             dd($destinationDirectory);
             $newFilename = $nomOriginal;
             // dd($newFilename);
             $uploadedFile->move($destinationDirectory, $newFilename);
-            $fichierDemande->setNomFichier($destinationDirectory.$newFilename);
+//            dd($uploadedFile);
+            $fichierDemande->setNomFichier($newFilename);
             $fichierDemande->setIdUser($idUser);
             $fichierDemande->setIdFichier($idNomFichier);
             $entityManager->persist($fichierDemande);
             $entityManager->flush();
 
             // dd($fichierDemande);
-            // $fichierDemandeRepository->save($fichierDemande, true);
+             $fichierDemandeRepository->save($fichierDemande, true);
 
             return $this->redirectToRoute('app_fichier_demande_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -122,13 +125,15 @@ class FichierDemandeController extends AbstractController
     }
 
 
-    #[Route('/fichierpdf/{name}', name: 'app_view_pdf', methods: ['GET'])]
+    #[Route('/{name}', name: 'app_view_pdf', methods: ['GET'])]
     public function view_pdf($name)
     {
         $projectRoot = $this->getParameter('kernel.project_dir');
         $filename = $name;
 
-        return $this->file($projectRoot.'/public/fichier/'.$filename, null, ResponseHeaderBag::DISPOSITION_INLINE);
+        $filePath = str_replace('\\', '/', $projectRoot) . '/public/fichier/' . $filename;
+
+        return $this->file($filePath, null, ResponseHeaderBag::DISPOSITION_INLINE);
     }
 
 
